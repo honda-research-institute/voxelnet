@@ -66,6 +66,7 @@ def iterate_data(data_dir, shuffle=False, aug=False, is_testset=False, batch_siz
 
     proc=Processor(data_tag, f_rgb, f_lidar, f_label, data_dir, aug, is_testset)
 
+    num_batches = 5
     for batch_idx in range(num_batches):
         start_idx = batch_idx * batch_size
         excerpt = indices[start_idx:start_idx + batch_size]

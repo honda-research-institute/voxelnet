@@ -20,12 +20,12 @@ from train_hook import check_if_should_pause
 
 
 parser = argparse.ArgumentParser(description='training')
-parser.add_argument('-i', '--max-epoch', type=int, nargs='?', default=160,
+parser.add_argument('-i', '--max-epoch', type=int, nargs='?', default=30,
                     help='max epoch')
 parser.add_argument('-n', '--tag', type=str, nargs='?', default='default',
                     help='set log tag')
-parser.add_argument('-b', '--single-batch-size', type=int, nargs='?', default=2,
-                    help='set batch size')
+parser.add_argument('-b', '--single-batch-size', type=int, nargs='?', default=1,
+                    help='set batch size') # requires (batch_size * 9GB) GPU memory
 parser.add_argument('-l', '--lr', type=float, nargs='?', default=0.001,
                     help='set learning rate')
 parser.add_argument('-al', '--alpha', type=float, nargs='?', default=1.0,

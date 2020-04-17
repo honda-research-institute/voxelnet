@@ -100,10 +100,7 @@ The current implementation and training scheme are able to produce results in th
 | Reproduced | 53.43  | 48.78 | 48.06 |
 
 # TODO
-- [X] improve the performances
-- [ ] reproduce results for `Pedestrian` and `Cyclist`
-- [X] fix the deadlock problem in multi-thread processing in training
-- [X] fix the infinite loop problem in `test.py`
-- [X] replace averaged calibration matrices with correct ones
+- [ ] Profile inference time
+- [ ] Get results for `Pedestrian` and `Cyclist`
 
 

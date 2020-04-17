@@ -20,7 +20,7 @@ if __name__ == '__main__':
                         help='set log tag')
     parser.add_argument('--output-path', type=str, nargs='?',
                         default='./predictions', help='results output dir')
-    parser.add_argument('-b', '--single-batch-size', type=int, nargs='?', default=2,
+    parser.add_argument('-b', '--single-batch-size', type=int, nargs='?', default=1,
                         help='set batch size for each gpu')
     parser.add_argument('-v', '--vis', type=bool, nargs='?', default=False,
                         help='set the flag to True if dumping visualizations')
