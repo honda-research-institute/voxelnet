@@ -249,7 +249,7 @@ class RPN3D(object):
             output_feed.append(self.validate_summary)
         return session.run(output_feed, input_feed)
 
-    def predict_step(self, session, data, summary=False, vis=False):
+    def predict_step(self, session, data, summary=False, vis=False, bev_only=False):
         # input:
         #     (N) tag
         #     (N, N') label(can be empty)
@@ -270,7 +270,7 @@ class RPN3D(object):
         img = data[5]
         lidar = data[6]
 
-        if summary or vis:
+        if not bev_only and (summary or vis):
             batch_gt_boxes3d = label_to_gt_box3d(
                 label, cls=self.cls, coordinate='lidar')
         print('predict', tag)
@@ -315,6 +315,15 @@ class RPN3D(object):
         for boxes3d, scores in zip(ret_box3d, ret_score):
             ret_box3d_score.append(np.concatenate([np.tile(self.cls, len(boxes3d))[:, np.newaxis],
                                                    boxes3d, scores[:, np.newaxis]], axis=-1))
+
+        if bev_only:
+            bird_views = []
+            bird_view = lidar_to_bird_view_img(
+                lidar[0], factor=cfg.BV_LOG_FACTOR)
+            bird_view = draw_lidar_box3d_on_birdview(bird_view, ret_box3d[0], ret_score[0],
+                                                     np.array([]), factor=cfg.BV_LOG_FACTOR)
+            bird_views.append(bird_view)
+            return tag, ret_box3d_score, None, bird_views, None
 
         if summary:
             # only summry 1 in a batch

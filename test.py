@@ -65,10 +65,14 @@ if __name__ == '__main__':
             
             for batch in iterate_data(val_dir, shuffle=False, aug=False, is_testset=False, batch_size=args.single_batch_size * cfg.GPU_USE_COUNT, multi_gpu_sum=cfg.GPU_USE_COUNT):
 
+                tic = time.perf_counter()
                 if args.vis:
                     tags, results, front_images, bird_views, heatmaps = model.predict_step(sess, batch, summary=False, vis=True)
                 else:
                     tags, results = model.predict_step(sess, batch, summary=False, vis=False)
+                toc = time.perf_counter()
+                t_lapse = toc - tic
+                print('Inference time = {:d} ms'.format(round(t_lapse*1000)))
                 
                 # ret: A, B
                 # A: (N) tag
@@ -88,7 +92,7 @@ if __name__ == '__main__':
                         heatmap_path = os.path.join( args.output_path, 'vis', tag + '_heatmap.jpg'  )
                         cv2.imwrite( front_img_path, front_image )
                         cv2.imwrite( bird_view_path, bird_view )
-                        cv2.imwrite( heatmap_path, heatmap )
+                        #cv2.imwrite( heatmap_path, heatmap )
 
 
 
